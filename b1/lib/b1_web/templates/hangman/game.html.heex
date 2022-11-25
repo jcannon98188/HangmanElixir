@@ -1,0 +1,28 @@
+<div id="game" class="row">
+    <div class="column">
+        <pre>
+            <%= figure_for(@tally.turns_left) %>
+        </pre>
+    </div>
+    <div class="column">
+        <table>
+            <tr>
+                <th>Turns left:</th>
+                <td><%= @tally.turns_left %></td>
+            </tr>
+            <tr>
+                <th>Letters Used:</th>
+                <td><%= @tally.used |> Enum.join(", ") %></td>
+            </tr>
+            <tr>
+                <th>Word so far:</th>
+                <td><%= @tally.letters |> Enum.join(" ") %></td>
+            </tr>
+        </table>
+        <%= form_for(@conn, Routes.hangman_path(@conn, :update), [ as: "make_move", method: :put], fn form -> %>
+            <%= text_input(form, :guess) %>
+            <%= submit("Make next guess") %>
+        <% end) %>
+
+    </div>
+</div>
