@@ -5,24 +5,8 @@
         </pre>
     </div>
     <div class="column">
-        <table>
-            <tr>
-                <th>Turns left:</th>
-                <td><%= @tally.turns_left %></td>
-            </tr>
-            <tr>
-                <th>Letters Used:</th>
-                <td><%= @tally.used |> Enum.join(", ") %></td>
-            </tr>
-            <tr>
-                <th>Word so far:</th>
-                <td><%= @tally.letters |> Enum.join(" ") %></td>
-            </tr>
-        </table>
-        <%= form_for(@conn, Routes.hangman_path(@conn, :update), [ as: "make_move", method: :put], fn form -> %>
-            <%= text_input(form, :guess) %>
-            <%= submit("Make next guess") %>
-        <% end) %>
-
+        <%= render("_tally_info.html", tally: @tally) %>
+        <%= move_status(@tally.game_state) |> raw %>
+        <%= continue_or_try_again(@conn, @tally.game_state) %>
     </div>
 </div>
